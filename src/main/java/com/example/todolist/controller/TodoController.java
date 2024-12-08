@@ -3,7 +3,6 @@ package com.example.todolist.controller;
 import com.example.todolist.dto.TodoRequestDto;
 import com.example.todolist.dto.TodoResponseDto;
 import com.example.todolist.entity.Todo;
-import com.example.todolist.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +13,10 @@ import java.util.*;
 @RequestMapping("/todo")
 public class TodoController {
     private final Map<Long, Todo> todoList = new HashMap<>();
+
     //메모 생성(값을 돌려받고 싶을 때 post 사용)
     @PostMapping
-    //투두 값이 응답되는 것(Dto에 저장되어 있음) ( 요청 이름 : 매개변수(값을 넣었을 때 여기에서 해줘라))
+    //투두 값이 응답되는 것(Dto에 저장되어 있음)              (            요청 이름 : 매개변수(값을 넣었을 때 여기에서 해줘라))
     public ResponseEntity<TodoResponseDto> createTodo(@RequestBody TodoRequestDto requestDto) {
         /*
         식별자가 1씩 증가하도록
@@ -45,7 +45,6 @@ public class TodoController {
             TodoResponseDto responseDto = new TodoResponseDto(todo);
             responseList.add(responseDto);
         }
-        
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
@@ -58,50 +57,30 @@ public class TodoController {
         if (todo == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(new TodoResponseDto(todo), HttpStatus.OK);
     }
 
     //수정 기능(dto 쓸 때 requestDto처럼 자세히 쓰기)
-    @PutMapping("/{id}")
-    public TodoResponseDto updateTodoById(
+    @PutMapping("/update/{id}")
+    public ResponseEntity<TodoResponseDto> updateTodoById(
             @PathVariable Long id,
             @RequestBody TodoRequestDto requestDto
     ) {
         Todo todo = todoList.get(id);
+        // 필수값 검증
+        if (todo == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        //투두 수정
         todo.update(requestDto);
-        return new TodoResponseDto(todo);
+        //응답
+        return new ResponseEntity<>(new TodoResponseDto(todo), HttpStatus.OK);
     }
 
     //삭제 기능
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteTodo(@PathVariable Long id) {
         todoList.remove(id);
     }
-}
 
-
-@PutMapping("/{id}")
-public ResponseEntity<TodoResponseDto> updateTodo(
-        @PathVariable Long id,
-        @RequestBody TodoRequestDto requestDto
-) {
-
-    Todo todo = todoList.get(id);
-
-    // NPE 방지
-    if (todo == null) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    // 필수값 검증
-    if (requestDto.getTask() == null || requestDto.getName() == null || requestDto.getPassword() == null) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    // todo 수정
-    todo.update(requestDto);
-
-    // 응답
-    return new ResponseEntity<>(new TodoResponseDto(todo), HttpStatus.OK);
 }

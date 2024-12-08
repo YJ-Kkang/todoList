@@ -3,7 +3,7 @@ package com.example.todolist.dto;
 import com.example.todolist.entity.Todo;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 public class TodoRequestDto {
@@ -11,11 +11,14 @@ public class TodoRequestDto {
     private String task;
     private String name;
     private String password;
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
+    private LocalDate createdOn;
+    private LocalDate updatedOn;
 
     //기본 생성자
-    public TodoRequestDto() {}
+    public TodoRequestDto() {
+        this.createdOn = LocalDate.now();
+        this.updatedOn = LocalDate.now();
+    }
 
     //memo 객체가 RequestDto 형태로 바껴서 응답이 되어야 함
     public TodoRequestDto(Todo todo) {
