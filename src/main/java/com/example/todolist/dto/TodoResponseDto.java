@@ -3,7 +3,7 @@ package com.example.todolist.dto;
 import com.example.todolist.entity.Todo;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class TodoResponseDto {
@@ -12,8 +12,8 @@ public class TodoResponseDto {
     private String task;
     private String name;
     private String password;
-    private LocalDate createdOn;
-    private LocalDate updatedOn;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
     //Tod0 class를 인자로 가지는 생성자
     public TodoResponseDto(Todo todo) {

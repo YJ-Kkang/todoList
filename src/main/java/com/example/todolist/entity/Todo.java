@@ -4,7 +4,7 @@ import com.example.todolist.dto.TodoRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -14,8 +14,8 @@ public class Todo {
     private String task;
     private String name;
     private String password;
-    private LocalDate createdOn;
-    private LocalDate updatedOn;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
     // 수정
     public void update(TodoRequestDto requestDto) {
