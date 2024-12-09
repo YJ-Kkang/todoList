@@ -38,9 +38,4 @@ public class Todo {
         //업데이트 시 현재 시간 설정
         this.updatedOn = LocalDateTime.now();
     }
-
-    public void updateTask(TodoRequestDto requestDto) {
-        this.task = requestDto.getTask();
-    }
-
 }
