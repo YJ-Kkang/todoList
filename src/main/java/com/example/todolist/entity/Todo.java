@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class Todo {
-
+    //ID 자동 생성
     private Long id;
+    // task, name, password 직접 입력해야 함
     private String task;
     private String name;
     private String password;
-    //now 메서드 이용(생성, 수정 시 현재 시간 사용)하여 데이터 베이스에 저장
+    //now 메서드 이용(생성, 수정 시 현재 시간 사용)하여 자동으로 데이터 베이스에 저장
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
