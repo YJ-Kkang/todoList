@@ -28,7 +28,7 @@ public class TodoController {
         */
         Long todoId = todoList.isEmpty() ? 1 : Collections.max(todoList.keySet()) + 1;
         //요청받은 데이터로 투두 객체 생성
-        Todo todo = new Todo(todoId, requestDto.getTask(), requestDto.getName(), requestDto.getPassword(), requestDto.getCreatedOn(), requestDto.getUpdatedOn());
+        Todo todo = new Todo(todoId, requestDto.getTask(), requestDto.getName(), requestDto.getPassword());
         /*
         Inmemory DB에 투두 저장(자바의 맵절 구조를 사용하여 그 안에 저장)
         키값은 todoId, 저장될 객체 형태는 투두
@@ -47,6 +47,8 @@ public class TodoController {
         }
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
+
+    //검색이나 조회는 바디에 패스워드 보낼 수 없어서 쿼리 파람 이용해서 전송하면 된다
 
     // 단건 조회 (Long id 값에 따라 조회하겠다)
     @GetMapping("/{id}")

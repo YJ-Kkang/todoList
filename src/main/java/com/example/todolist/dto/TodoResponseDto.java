@@ -15,7 +15,7 @@ public class TodoResponseDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
-    //Tod0 class를 인자로 가지는 생성자
+    //투두 class를 인자로 가지는 생성자
     public TodoResponseDto(Todo todo) {
         this.id = todo.getId();
         this.task = todo.getTask();

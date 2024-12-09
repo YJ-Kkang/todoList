@@ -20,13 +20,11 @@ public class TodoRequestDto {
         this.updatedOn = LocalDateTime.now();
     }
 
-    //memo 객체가 RequestDto 형태로 바껴서 응답이 되어야 함
+    //투두 객체가 RequestDto 형태로 바껴서 응답이 되어야 함
     public TodoRequestDto(Todo todo) {
         this.id = todo.getId();
         this.task = todo.getTask();
         this.name = todo.getName();
         this.password = todo.getPassword();
-        this.createdOn = todo.getCreatedOn();
-        this.updatedOn = todo.getUpdatedOn();
     }
 }
