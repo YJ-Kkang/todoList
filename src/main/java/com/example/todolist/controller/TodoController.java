@@ -39,20 +39,35 @@ public class TodoController {
 
     //전체 조회
     @GetMapping
-    public ResponseEntity<List<TodoResponseDto>> findAllMemos() {
+    public ResponseEntity<List<TodoResponseDto>> findAllTodos(@RequestParam(required = false) String name, @RequestParam(required = false) String updatedOn) {
         List<TodoResponseDto> responseList = new ArrayList<>();
+
         for (Todo todo : todoList.values()) {
-            TodoResponseDto responseDto = new TodoResponseDto(todo);
-            responseList.add(responseDto);
+            // 작성자명 필터링
+            if (name != null && !todo.getName().equals(name)) {
+                continue;
+            }
+
+            // 수정일 필터링 (YYYY-MM-DD 형식 비교)
+            if (updatedOn != null && !todo.getUpdatedOn().toLocalDate().toString().equals(updatedOn)) {
+                continue;
+            }
+
+            responseList.add(new TodoResponseDto(todo));
         }
+
+        // 수정일 기준 내림차순 정렬
+        responseList.sort((t1, t2) -> t2.getUpdatedOn().compareTo(t1.getUpdatedOn()));
+
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
+
     // 단건 조회 (Long id 값에 따라 조회하겠다)
-    //검색이나 조회는 바디에 패스워드 보낼 수 없어서 쿼리 파람 이용해서 전송하면 된다
+    //조회나 삭제는 바디에 패스워드 보낼 수 없음 -> 쿼리 파람 이용해 전송
     @GetMapping("/{id}")
     //요청 경로변수용 어노테이션
-    public ResponseEntity<TodoResponseDto> findMemoById(@PathVariable Long id) {
+    public ResponseEntity<TodoResponseDto> findTodoById(@PathVariable Long id) {
         //get(i)는 인덱스로 쓴다는 것
         Todo todo = todoList.get(id);
         if (todo == null) {
@@ -83,17 +98,24 @@ public class TodoController {
     }
 
     //삭제 기능
-    //투두리스트에서 꺼내오는 것... 꺼내왔는데 널이 아니면... 투두가 저장된 곳에서 패스워드를 넣어주고 있는가
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id, @RequestParam String password) {
         Todo todo = todoList.get(id);
-        if (todo == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if(!todo.getPassword().equals(password)) {
-            //비번 일치하지 않으면 접근 거부
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        // todoList의 Key값에 id를 포함하고 있는 경우
+        if (todoList.containsKey(id)) {
+            if (todo == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else if(!todo.getPassword().equals(password)) {
+                //비번 일치하지 않으면 접근 거부
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            // key가 id인 value 삭제
+            todoList.remove(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        todoList.remove(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        // 포함하고 있지 않은 경우
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
