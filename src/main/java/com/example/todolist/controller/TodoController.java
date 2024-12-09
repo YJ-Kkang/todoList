@@ -48,9 +48,8 @@ public class TodoController {
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
-    //검색이나 조회는 바디에 패스워드 보낼 수 없어서 쿼리 파람 이용해서 전송하면 된다
-
     // 단건 조회 (Long id 값에 따라 조회하겠다)
+    //검색이나 조회는 바디에 패스워드 보낼 수 없어서 쿼리 파람 이용해서 전송하면 된다
     @GetMapping("/{id}")
     //요청 경로변수용 어노테이션
     public ResponseEntity<TodoResponseDto> findMemoById(@PathVariable Long id) {
@@ -66,12 +65,16 @@ public class TodoController {
     @PutMapping("/update/{id}")
     public ResponseEntity<TodoResponseDto> updateTodoById(
             @PathVariable Long id,
-            @RequestBody TodoRequestDto requestDto
+            @RequestBody TodoRequestDto requestDto,
+            @RequestParam String password
     ) {
         Todo todo = todoList.get(id);
         // 필수값 검증
         if (todo == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else if (!todo.getPassword().equals(password)) {
+            //비번 일치하지 않으면 접근 거부
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         //투두 수정
         todo.update(requestDto);
@@ -80,9 +83,17 @@ public class TodoController {
     }
 
     //삭제 기능
+    //투두리스트에서 꺼내오는 것... 꺼내왔는데 널이 아니면... 투두가 저장된 곳에서 패스워드를 넣어주고 있는가
     @DeleteMapping("/delete/{id}")
-    public void deleteTodo(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id, @RequestParam String password) {
+        Todo todo = todoList.get(id);
+        if (todo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if(!todo.getPassword().equals(password)) {
+            //비번 일치하지 않으면 접근 거부
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         todoList.remove(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

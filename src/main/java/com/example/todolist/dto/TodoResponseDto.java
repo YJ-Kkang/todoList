@@ -11,7 +11,6 @@ public class TodoResponseDto {
     private Long id;
     private String task;
     private String name;
-    private String password;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
@@ -20,7 +19,6 @@ public class TodoResponseDto {
         this.id = todo.getId();
         this.task = todo.getTask();
         this.name = todo.getName();
-        this.password = todo.getPassword();
         this.createdOn = todo.getCreatedOn();
         this.updatedOn = todo.getUpdatedOn();
     }
