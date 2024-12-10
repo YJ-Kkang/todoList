@@ -34,7 +34,7 @@ public class Todo {
     public void update(TodoRequestDto requestDto) {
         this.task = requestDto.getTask();
         this.name = requestDto.getName();
-        this.password = requestDto.getPassword();
+
         //업데이트 시 현재 시간 설정
         this.updatedOn = LocalDateTime.now();
     }
