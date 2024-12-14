@@ -5,7 +5,7 @@
 
 ## 🧑‍🏫 프로젝트 소개
 - 이 프로젝트는 간단한 일정 관리 애플리케이션입니다.
-- 사용자는 일정 항목을 생성, 조회, 수정, 삭제할 수 있습니다.
+- 사용자는 일정 항목을 생성, 조회, 수정 및 삭제할 수 있습니다.
 
 <br>
 
@@ -13,7 +13,7 @@
 
 \- **2024. 11. 28. (목) ~ 2024. 12. 10. (화)**
 
-\- 공부 기간: 2024. 11. 28. (목) ~ 2024. 11. 05. (수)
+\- 공부 기간: 2024. 11. 28. (목) ~ 2024. 12. 05. (수)
 
 \- 개발 기간: 2024. 12. 06. (금) ~ 2024. 12. 10. (화)
 
@@ -95,51 +95,104 @@ bash git clone https://github.com/YJ-Kkang/todolist.git .
 2. 아래의 `API 명세서`를 참고하여 일정을 생성, 조회, 수정, 삭제합니다.
 
 ### 📌 API 명세서
+![일정 관리 앱 API 설계](https://github.com/YJ-Kkang/todoList/blob/master/images/API%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8.png?raw=true)
+
 
 
 <br>
 
 ## 📚 사용 예시
-### Lv 1
-
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_1_ex_1.png?raw=true)
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_1_ex_2.png?raw=true)
-
-<br>
-
-### Lv 2
-
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_2_ex_1.png?raw=true)
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_2_ex_2.png?raw=true)
-
-<br>
-
-### Lv 3
-
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_3_ex_1.png?raw=true)
-![title](https://github.com/YJ-Kkang/spaKiosk/blob/dev/images/lv_3_ex_2.png?raw=true)
+서버를 실행시키고, Postman을 통해 아래의 예시 요청을 보내 일정 관리 기능을 사용할 수 있습니다.
+### ◎ 일정 생성
+- **URL**
+```
+http://localhost:8080/todo
+```
+- **Method**: POST
+- Body: `raw JSON`
+```
+{
+    "task": "자바 책 읽기1",
+    "name": "닉네임1",
+    "password": "비번123"
+}
+```
+![생성 결과 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%89%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%20%E1%84%80%E1%85%A7%E1%86%AF%E1%84%80%E1%85%AA%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
 
 <br>
 
-### Lv 4
-
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/b8de93c333e65e8d4febb607fc087b3e26323c25/images/lv_4_ex_1.png)
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/b8de93c333e65e8d4febb607fc087b3e26323c25/images/lv_4_ex_2.png)
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/b8de93c333e65e8d4febb607fc087b3e26323c25/images/lv_4_ex_3.png)
+### ◎ 일정 단건 조회
+- **URL**
+```
+http://localhost:8080/todo/1
+```
+- **Method**: GET
+![단건 조회 결과 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%83%E1%85%A1%E1%86%AB%E1%84%80%E1%85%A5%E1%86%AB%20%E1%84%8C%E1%85%A9%E1%84%92%E1%85%AC%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
 
 <br>
 
-### Lv 5
+### ◎ 일정 다건 조회(작성자명 기준 필터링)
+- **URL**
+```
+http://localhost:8080/todo?name=닉네임1
+```
+- **Method**: GET
+  ![일정 전체 조회(작성자명 기준 정렬) 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%89%E1%85%A5%E1%86%BC%E1%84%8C%E1%85%A1%E1%84%86%E1%85%A7%E1%86%BC%20%E1%84%8C%E1%85%A9%E1%84%92%E1%85%AC%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
 
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/77d8c8a27a4baa11d20c652c7b7d7d6b5a6cb3d9/images/lv_5_ex_1.png)
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/77d8c8a27a4baa11d20c652c7b7d7d6b5a6cb3d9/images/lv_5_ex_2.png)
-![title](https://raw.githubusercontent.com/YJ-Kkang/spaKiosk/77d8c8a27a4baa11d20c652c7b7d7d6b5a6cb3d9/images/lv_5_ex_3.png)
 
+<br>
+
+### ◎ 일정 다건 조회(수정일 기준 필터링)
+- **URL**
+```
+http://localhost:8080/todo?updatedOn=2024-12-10
+```
+- **Method**: GET
+  ![일정 전체 조회(수정일 기준 정렬) 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%B5%E1%86%AF%20%E1%84%8C%E1%85%A9%E1%84%92%E1%85%AC%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
+
+
+<br>
+
+### ◎ 일정 다건 조회(작성자명 & 수정일 기준 필터링)
+- **URL**
+```
+http://localhost:8080/todo?updatedOn=2024-12-10&name=닉네임2
+```
+- **Method**: GET
+  ![일정 전체 조회(작성자명, 수정일 기준 정렬) 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%89%E1%85%A5%E1%86%BC%E1%84%8C%E1%85%A1%26%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%B5%E1%86%AF%20%E1%84%8C%E1%85%A9%E1%84%92%E1%85%AC%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
+
+
+<br>
+
+### ◎ 일정 단건 수정(할일, 사용자명 수정)
+- **URL**
+```
+http://localhost:8080/todo/update/1?password=비번123
+```
+- **Method**: PUT
+- Body: `raw JSON`
+```
+{
+    "task" : "수정된 할일",
+    "name" : "수정된 닉네임"
+}
+```
+  ![일정 단건 수정(할일, 사용자명 수정) 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%83%E1%85%A1%E1%86%AB%E1%84%80%E1%85%A5%E1%86%AB%20%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
+
+
+<br>
+
+### ◎ 일정 삭제
+- **URL**
+```
+http://localhost:8080/todo/delete/1?password=비번123
+```
+- **Method**: DELETE
+  ![일정 삭제 예시](https://raw.githubusercontent.com/YJ-Kkang/todoList/ccdc848c7a048023c41733ace48a36a6cd40d1f8/images/%E1%84%89%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%A6%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png)
 
 <br>
 
 ## 📨 문의 사항
 Yujin Kang - kyujin995@gmail.com
 
-Project Link: https://github.com/YJ-Kkang/spa-homework.git
-.
+Project Link: https://github.com/YJ-Kkang/todoList

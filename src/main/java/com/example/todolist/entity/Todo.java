@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
+//생성자 만들어주는 것(아이디, 테스크, 패그워드, 날짜들로 생성자 만들어주는 것)
 @AllArgsConstructor
 public class Todo {
     //ID 자동 생성
